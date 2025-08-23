@@ -26,28 +26,27 @@ python3 --version
 ### Clone repo
 ```
 git clone https://github.com/nazakun021/build-your-first-ai-agent-langgraph.git
-$ cd build-your-first-ai-agent-langgraph
+cd build-your-first-ai-agent-langgraph
 ```
 
 ### Create an environment and install dependencies
 #### Mac/Linux/WSL
 ```
-$ python3 -m venv langgraph-workshop-env
-$ source langgraph-workshop-env/bin/activate
-$ pip install -r requirements.txt
+python3 -m venv langgraph-workshop-env
+source langgraph-workshop-env/bin/activate
+pip install -r requirements.txt
 ```
 #### Windows Powershell
 ```
-PS> python3 -m venv langgraph-workshop-env
-PS> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
-PS> langgraph-workshop-env\Scripts\Activate.ps1
-PS> pip install -r requirements.txt
+python3 -m venv langgraph-workshop-env
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+langgraph-workshop-env\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
 ### Running notebooks
-If you don't have Jupyter set up, follow installation instructions [here](https://jupyter.org/install).
 ```
-$ jupyter notebook
+jupyter notebook
 ```
 
 ### Setting up env variables
@@ -55,11 +54,11 @@ Briefly going over how to set up environment variables. You can also
 use a `.env` file with `python-dotenv` library.
 #### Mac/Linux/WSL
 ```
-$ export API_ENV_VAR="your-api-key-here"
+export API_ENV_VAR="your-api-key-here"
 ```
 #### Windows Powershell
 ```
-PS> $env:API_ENV_VAR = "your-api-key-here"
+$env:API_ENV_VAR = "your-api-key-here"
 ```
 
 ### Set GroqCloud API key
