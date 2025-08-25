@@ -8,11 +8,15 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_community.document_loaders import WikipediaLoader
 from langchain_community.tools.tavily_search import TavilySearchResults
 
-from langchain_groq import ChatGroq
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 from langgraph.graph import StateGraph, START, END
 
-llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0) 
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0) 
 
 class State(TypedDict):
     question: str

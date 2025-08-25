@@ -5,6 +5,8 @@ from typing_extensions import TypedDict
 from pydantic import BaseModel
 
 from langchain_groq import ChatGroq 
+from dotenv import load_dotenv
+load_dotenv()
 
 from langgraph.constants import Send
 from langgraph.graph import END, StateGraph, START

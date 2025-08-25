@@ -4,6 +4,9 @@ from langchain_groq import ChatGroq
 from langgraph.graph import START, StateGraph, MessagesState
 from langgraph.prebuilt import tools_condition, ToolNode
 
+from dotenv import load_dotenv
+load_dotenv()
+
 def add(a: int, b: int) -> int:
     """Adds a and b.
 

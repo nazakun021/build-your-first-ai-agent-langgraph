@@ -6,14 +6,19 @@ from typing_extensions import TypedDict
 from langchain_community.document_loaders import WikipediaLoader
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, get_buffer_string
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 from langgraph.constants import Send
 from langgraph.graph import END, MessagesState, START, StateGraph
 
-### LLM
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
-llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0) 
+### LLMs
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0) 
+# Fast LLM for Subtasks
+fast_llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-lite", temperature=0)
 
 ### Schema 
 
@@ -138,7 +143,7 @@ def generate_question(state: InterviewState):
 
     # Generate question 
     system_message = question_instructions.format(goals=analyst.persona)
-    question = llm.invoke([SystemMessage(content=system_message)]+messages)
+    question = fast_llm.invoke([SystemMessage(content=system_message)]+messages)
         
     # Write messages to state
     return {"messages": [question]}
@@ -162,7 +167,7 @@ def search_web(state: InterviewState):
     tavily_search = TavilySearchResults(max_results=3)
 
     # Search query
-    structured_llm = llm.with_structured_output(SearchQuery)
+    structured_llm = fast_llm.with_structured_output(SearchQuery)
     search_query = structured_llm.invoke([search_instructions]+state['messages'])
     
     # Search
@@ -183,7 +188,7 @@ def search_wikipedia(state: InterviewState):
     """ Retrieve docs from wikipedia """
 
     # Search query
-    structured_llm = llm.with_structured_output(SearchQuery)
+    structured_llm = fast_llm.with_structured_output(SearchQuery)
     search_query = structured_llm.invoke([search_instructions]+state['messages'])
     
     # Search
@@ -481,7 +486,7 @@ def write_introduction(state: ResearchGraphState):
     # Summarize the sections into a final report
     
     instructions = intro_conclusion_instructions.format(topic=topic, formatted_str_sections=formatted_str_sections)    
-    intro = llm.invoke([instructions]+[HumanMessage(content=f"Write the report introduction")]) 
+    intro = fast_llm.invoke([instructions]+[HumanMessage(content=f"Write the report introduction")]) 
     return {"introduction": intro.content}
 
 def write_conclusion(state: ResearchGraphState):
@@ -498,7 +503,7 @@ def write_conclusion(state: ResearchGraphState):
     # Summarize the sections into a final report
     
     instructions = intro_conclusion_instructions.format(topic=topic, formatted_str_sections=formatted_str_sections)    
-    conclusion = llm.invoke([instructions]+[HumanMessage(content=f"Write the report conclusion")]) 
+    conclusion = fast_llm.invoke([instructions]+[HumanMessage(content=f"Write the report conclusion")]) 
     return {"conclusion": conclusion.content}
 
 def finalize_report(state: ResearchGraphState):
