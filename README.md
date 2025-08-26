@@ -128,3 +128,15 @@ You should see the following output:
 Open your browser and navigate to the Studio UI: `https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024`.
 
 * To use Studio, you will need to create a `.env` file with the relevant API keys
+
+---
+
+### Set up ADC for a local development environment
+To configure Application Default Credentials (ADC) with a Google Account, you can use the Google Cloud CLI:
+1. **Install the Google Cloud CLI**  
+   Download and install it from [Google Cloud CLI installation docs](https://cloud.google.com/sdk/docs/install).
+2. **Authenticate your account and set up local ADC**  
+   Run the following in your terminal or PowerShell:
+```bash
+gcloud auth application-default login
+```
